@@ -2,9 +2,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow,QTableWidgetItem
 from gui import Ui_MainWindow
 from PyQt5 import QtCore
 from data import *
-import sys
-
-
+import sys, csv, re
 class MyApp(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -40,8 +38,9 @@ class MyApp(QMainWindow):
         self.ui.tableWidget.setItem(rowPosition,1,QTableWidgetItem(str(value2)))
     def exactCSV(self):
         rowPosition = self.ui.tableWidget.rowCount()
-        colPosition = 2
-        path = f"{str(self.ui.lineEdit_13.text())}_chats.csv"
+        # colPosition = 2
+        fileName = re.findall("me/(.*)",str(self.ui.lineEdit_13.text()))[0]
+        path = f"{str(fileName)}_chats.csv"
         with open(path,"w",encoding='UTF-8') as f:
             writer = csv.writer(f,delimiter=",",lineterminator="\n")
             writer.writerow(['username','count'])
